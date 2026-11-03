@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4-Photo Animation Showcase</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom CSS Effects & Animations */
+    
+    /* 1. 3D Cube Carousel */
+    .cube-container {
+      perspective: 1000px;
+    }
+    .cube-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cube-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+    .cube-face-1 { transform: rotateY(0deg) translateZ(160px); }
+    .cube-face-2 { transform: rotateY(90deg) translateZ(160px); }
+    .cube-face-3 { transform: rotateY(180deg) translateZ(160px); }
+    .cube-face-4 { transform: rotateY(-90deg) translateZ(160px); }
+
+    @media (min-width: 640px) {
+      .cube-face-1 { transform: rotateY(0deg) translateZ(200px); }
+      .cube-face-2 { transform: rotateY(90deg) translateZ(200px); }
+      .cube-face-3 { transform: rotateY(180deg) translateZ(200px); }
+      .cube-face-4 { transform: rotateY(-90deg) translateZ(200px); }
+    }
+
+    /* 2. Expanding Accordion Grid */
+    .accordion-container {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      height: 360px;
+    }
+    .accordion-item {
+      flex: 1;
+      height: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: flex 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.3s ease, filter 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+    .accordion-container:hover .accordion-item {
+      flex: 0.6;
+      filter: brightness(0.7);
+    }
+    .accordion-container .accordion-item:hover {
+      flex: 3;
+      filter: brightness(1.05);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    /* 3. Floating Fan-Out Stack */
+    .fan-stack-container {
+      position: relative;
+      width: 260px;
+      height: 320px;
+    }
+    .fan-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 1.25rem;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+    .fan-card:nth-child(1) { transform: rotate(-8deg) scale(0.96); z-index: 1; }
+    .fan-card:nth-child(2) { transform: rotate(-3deg) scale(0.98); z-index: 2; }
+    .fan-card:nth-child(3) { transform: rotate(4deg) scale(1.0); z-index: 3; }
+    .fan-card:nth-child(4) { transform: rotate(9deg) scale(1.02); z-index: 4; }
+
+    /* Fan-out on hover or active class */
+    .fan-stack-container:hover .fan-card:nth-child(1),
+    .fan-stack-container.active .fan-card:nth-child(1) {
+      transform: translate(-90px, -15px) rotate(-16deg) scale(0.95);
+    }
+    .fan-stack-container:hover .fan-card:nth-child(2),
+    .fan-stack-container.active .fan-card:nth-child(2) {
+      transform: translate(-30px, 10px) rotate(-6deg) scale(0.98);
+    }
+    .fan-stack-container:hover .fan-card:nth-child(3),
+    .fan-stack-container.active .fan-card:nth-child(3) {
+      transform: translate(30px, -10px) rotate(6deg) scale(1.0);
+    }
+    .fan-stack-container:hover .fan-card:nth-child(4),
+    .fan-stack-container.active .fan-card:nth-child(4) {
+      transform: translate(90px, 15px) rotate(16deg) scale(1.02);
+    }
+
+    /* 4. Ken Burns Pan & Zoom */
+    .kenburns-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    .kenburns-slide.active {
+      opacity: 1;
+    }
+    .kenburns-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1);
+      transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .kenburns-slide.active .kenburns-img {
+      transform: scale(1.15) translate(-10px, -5px);
+    }

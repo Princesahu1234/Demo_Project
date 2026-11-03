@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced 4-Photo Animation Showcase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f17;
+            color: #f3f4f6;
+        }
+
+        /* 1. 3D Cube Rotation Styles */
+        .cube-scene {
+            width: 260px;
+            height: 260px;
+            perspective: 800px;
+        }
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 16s infinite linear;
+            transition: transform 0.5s ease-out;
+        }
+        .cube:hover {
+            animation-play-state: paused;
+        }
+        .cube-face {
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .cube-face-1 { transform: rotateY(0deg) translateZ(130px); }
+        .cube-face-2 { transform: rotateY(90deg) translateZ(130px); }
+        .cube-face-3 { transform: rotateY(180deg) translateZ(130px); }
+        .cube-face-4 { transform: rotateY(-90deg) translateZ(130px); }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(-10deg) rotateY(0deg); }
+            100% { transform: rotateX(-10deg) rotateY(360deg); }
+        }
+
+        /* 2. Photo Card Swap / 3D Stack Flip */
+        .card-stack {
+            position: relative;
+            width: 280px;
+            height: 350px;
+            perspective: 1000px;
+        }
+        .card-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 3. 2x2 Grid Expand / Morph */
+        .grid-expand-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 12px;
+            width: 320px;
+            height: 320px;
+            transition: all 0.5s ease;
+        }
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .grid-expand-container:has(.grid-item:hover) .grid-item:not(:hover) {
+            opacity: 0.3;
+            transform: scale(0.92);
+        }
+        .grid-item:hover {
+            grid-column: span 2;
+            grid-row: span 2;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+
+        /* 4. Carousel / 3D Ring Rotator */
+        .carousel-3d-scene {
+            width: 320px;
+            height: 240px;
+            perspective: 900px;
+            position: relative;
+        }
+        .carousel-3d-ring {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .carousel-3d-card {
+            position: absolute;
+            width: 180px;
+            height: 220px;
+            left: 70px;
+            top: 10px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.5s ease;
+        }
+        .carousel-3d-card:nth-child(1) { transform: rotateY(0deg) translateZ(190px); }
+        .carousel-3d-card:nth-child(2) { transform: rotateY(90deg) translateZ(190px); }
+        .carousel-3d-card:nth-child(3) { transform: rotateY(180deg) translateZ(190px); }
+        .carousel-3d-card:nth-child(4) { transform: rotateY(270deg) translateZ(190px); }
+
+        /* 5. Ken Burns Dynamic Zoom */
+        .ken-burns-box {
+            position: relative;
+            width: 340px;
+            height: 280px;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .kb-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: kenBurnsFade 20s infinite;
+        }
+        .kb-slide:nth-child(1) { animation-delay: 0s; }
+        .kb-slide:nth-child(2) { animation-delay: 5s; }
+        .kb-slide:nth-child(3) { animation-delay: 10s; }
+        .kb-slide:nth-child(4) { animation-delay: 15s; }
+
+        @keyframes kenBurnsFade {
+            0% { opacity: 0; transform: scale(1) translate(0, 0); }
+            8% { opacity: 1; }
+            25% { opacity: 1; transform: scale(1.15) translate(-10px, -5px); }
+            33% { opacity: 0; transform: scale(1.2) translate(-15px, -8px); }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-600/20 border border-indigo-500/30 rounded-xl text-indigo-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">4-Photo Animation Studio</h1>
+                    <p class="text-xs text-slate-400">Multi-style 3D & interactive photo layouts in single component space</p>
+                </div>
+            </div>
+            
+            <!-- Effect Tabs Switcher -->
+            <nav class="flex flex-wrap gap-1 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800 text-xs">
+                <button onclick="switchTab('cube')" id="tab-cube" class="tab-btn px-3 py-1.5 rounded-lg font-medium transition-all bg-indigo-600 text-white shadow-sm">3D Cube</button>
+                <button onclick="switchTab('stack')" id="tab-stack" class="tab-btn px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white">Card Swap</button>
+                <button onclick="switchTab('grid')" id="tab-grid" class="tab-btn px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white">2x2 Expand</button>
+                <button onclick="switchTab('carousel')" id="tab-carousel" class="tab-btn px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white">3D Ring</button>
+                <button onclick="switchTab('kenburns')" id="tab-kenburns" class="tab-btn px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white">Ken Burns Zoom</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Interactive Showcase Area -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-6 md:p-10 flex flex-col items-center justify-center">
+
+        <!-- 1. 3D CUBE CONTAINER -->
+        <div id="view-cube" class="effect-view flex flex-col items-center gap-6">
+            <div class="cube-scene">
+                <div class="cube" id="cube-element">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" class="cube-face cube-face-1 object-cover" alt="Image 1">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" class="cube-face cube-face-2 object-cover" alt="Image 2">
+                    <img src="https://images.unsplash.com/photo-1426604966848-d7adac902bff?auto=format&fit=crop&w=800&q=80" class="cube-face cube-face-3 object-cover" alt="Image 3">
+                    <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80" class="cube-face cube-face-4 object-cover" alt="Image 4">
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-xs text-slate-400">
+                <span>Hover cube to pause</span>
+                <span>•</span>
+                <button onclick="rotateCubeNext()" class="text-indigo-400 hover:underline">Rotate +90°</button>
+            </div>
+        </div>
+
+        <!-- 2. CARD SWAP / FLIP STACK -->
+        <div id="view-stack" class="effect-view hidden flex-col items-center gap-6">
+            <div class="card-stack" id="card-stack-container" onclick="cycleStack()">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" class="card-item object-cover" alt="Stack 1">
+                <img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=800&q=80" class="card-item object-cover" alt="Stack 2">
+                <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80" class="card-item object-cover" alt="Stack 3">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" class="card-item object-cover" alt="Stack 4">
+            </div>
+            <p class="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl">Click the card stack to send top photo to back</p>
+        </div>
+
+        <!-- 3. 2x2 GRID ACCORDION EXPAND -->
+        <div id="view-grid" class="effect-view hidden flex-col items-center gap-6">
+            <div class="grid-expand-container">
+                <div class="grid-item">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Grid 1">
+                </div>
+                <div class="grid-item">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Grid 2">
+                </div>
+                <div class="grid-item">
+                    <img src="https://images.unsplash.com/photo-1426604966848-d7adac902bff?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Grid 3">
+                </div>
+                <div class="grid-item">
+                    <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Grid 4">
+                </div>
+            </div>
+            <p class="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl">Hover over any frame to expand it focus-style</p>
+        </div>
+
+        <!-- 4. 3D CAROUSEL RING ROTATOR -->
+        <div id="view-carousel" class="effect-view hidden flex-col items-center gap-6">
+            <div class="carousel-3d-scene">
+                <div class="carousel-3d-ring" id="ring-container">
+                    <div class="carousel-3d-card"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Ring 1"></div>
+                    <div class="carousel-3d-card"><img src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Ring 2"></div>
+                    <div class="carousel-3d-card"><img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Ring 3"></div>
+                    <div class="carousel-3d-card"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Ring 4"></div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="rotateRing(-1)" class="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 text-xs font-semibold">‹ Previous</button>
+                <button onclick="rotateRing(1)" class="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 text-xs font-semibold">Next ›</button>
+            </div>
+        </div>
+
+        <!-- 5. MORPHING KEN BURNS ZOOM -->
+        <div id="view-kenburns" class="effect-view hidden flex-col items-center gap-6">
+            <div class="ken-burns-box">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" class="kb-slide" alt="KB 1">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80" class="kb-slide" alt="KB 2">
+                <img src="https://images.unsplash.com/photo-1426604966848-d7adac902bff?auto=format&fit=crop&w=800&q=80" class="kb-slide" alt="KB 3">
+                <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&fit=crop&w=800&q=80" class="kb-slide" alt="KB 4">
+            </div>
+            <p class="text-xs text-slate-400 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl">Continuous pan & zoom smooth fading transitions</p>
+        </div>
+
+    </main>
+
+    <!-- Footer Script Logic -->
+    <script>
+        // Tab switching logic
+        function switchTab(effectId) {
+            document.querySelectorAll('.effect-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+
+            document.getElementById(`view-${effectId}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tab-${effectId}`);
+            activeTab.classList.add('bg-indigo-600', 'text-white');
+            activeTab.classList.remove('text-slate-400');
+        }
+
+        // Cube Rotation Control
+        let currentCubeAngle = 0;
+        function rotateCubeNext() {
+            currentCubeAngle -= 90;
+            const cube = document.getElementById('cube-element');
+            cube.style.animation = 'none';
+            cube.style.transform = `rotateX(-10deg) rotateY(${currentCubeAngle}deg)`;
+        }
+
+        // Card Stack Swap Logic
+        const cardOrder = [0, 1, 2, 3];
+        function renderStack() {
+            const cards = document.querySelectorAll('.card-item');
+            cardOrder.forEach((cardIdx, stackPos) => {
+                const card = cards[cardIdx];
+                const rotate = (stackPos * 4) - 6;
+                const translateY = stackPos * 6;
+                const scale = 1 - (stackPos * 0.04);
+                
+                card.style.zIndex = 10 - stackPos;
+                card.style.transform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
+                card.style.opacity = stackPos === 3 ? '0.5' : '1';
+            });
+        }
+        function cycleStack() {
+            const topCard = cardOrder.shift();
+            cardOrder.push(topCard);
+            renderStack();
+        }
+        renderStack();
+
+        // 3D Ring Rotator Logic
+        let ringAngle = 0;
+        function rotateRing(direction) {
+            ringAngle += direction * -90;
+            document.getElementById('ring-container').style.transform = `rotateY(${ringAngle}deg)`;
+        }
+    </script>
+</body>
+</html>
