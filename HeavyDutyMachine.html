@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep Hole Processing & Finishing | HeissTek Machinery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0e1318;
+      --bg-surface: #131920;
+      --bg-card: #171f28;
+      --bg-card-elevated: #1d2733;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(224, 154, 108, 0.45);
+      --accent-copper: #e09a6c;
+      --accent-copper-bright: #f5c3a1;
+      --accent-copper-dark: #9c5d36;
+      --accent-blue: #2563eb;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.65;
+      min-height: 100vh;
+      padding: 48px 20px;
+    }
+
+    /* Subtle Industrial Grid Background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Main Hero Card Section */
+    .machining-hero {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      margin-bottom: 36px;
+    }
+
+    .image-container {
+      position: relative;
+      background: #090c10;
+      min-height: 400px;
+      overflow: hidden;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.92) contrast(1.06);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .machining-hero:hover .image-container img {
+      transform: scale(1.03);
+    }
+
+    .badge-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      width: 84px;
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(0 0, 100% 0, 0 100%);
+      padding-right: 20px;
+      padding-bottom: 20px;
+      z-index: 2;
+      box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .content-container {
+      padding: 44px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-elevated) 100%);
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent-copper);
+      margin-bottom: 10px;
+    }
+
+    .content-container h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff 30%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .description {
+      color: var(--text-secondary);
+      font-size: 1.02rem;
+      margin-bottom: 24px;
+    }
+
+    .features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      margin-bottom: 30px;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .features-list li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--accent-blue);
+      border-radius: 2px;
+      margin-top: 7px;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent-copper-dark), var(--accent-copper));
+      color: #0e1318;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      width: fit-content;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(224, 154, 108, 0.3);
+    }
+
+    /* Section Containers */
+    .tech-explorer {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 36px;
+      margin-bottom: 36px;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Navigation Tabs */
+    .tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 18px;
+    }
+
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--accent-copper);
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      background: rgba(224, 154, 108, 0.14);
+      border-color: var(--accent-copper);
+      color: var(--accent-copper-bright);
+    }
+
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-title-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title-bar h3 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.45rem;
+      color: var(--accent-copper-bright);
+    }
+
+    .partner-tag {
+      background: rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.4);
+      color: #93c5fd;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Key Models Badge Container */
+    .models-highlight {
+      background: rgba(224, 154, 108, 0.08);
+      border: 1px dashed var(--accent-copper);
+      border-radius: 10px;
+      padding: 14px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .models-highlight strong {
+      color: var(--accent-copper-bright);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .model-badge {
+      background: var(--bg-card-elevated);
+      color: var(--text-primary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: monospace;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.25s ease;
+    }
+
+    .detail-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .detail-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .detail-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(224, 154, 108, 0.12);
+      color: var(--accent-copper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .detail-card h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .detail-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .detail-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .detail-card ul li {
+      color: var(--text-secondary);
+      font-size: 0.91rem;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .detail-card ul li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent-copper);
+      font-weight: bold;
+    }
+
+    /* Next-Gen Machine Technology Grid */
+    .innovation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .innovation-card {
+      background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-card-elevated) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .innovation-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .tech-tag {
+      display: inline-block;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--accent-copper);
+      background: rgba(224, 154, 108, 0.1);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .innovation-card h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.15rem;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .innovation-card p {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .metric-pill {
+      margin-top: 14px;
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.14);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .machining-hero {
+        grid-template-columns: 1fr;
+      }
+      .detail-grid, .innovation-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="machining-hero">
+      <div class="image-container">
+        <div class="badge-number">01</div>
+        <img src="Gun drilling-1.png" alt="Deep Hole Processing and Finishing Systems" />
+      </div>
+
+      <div class="content-container">
+        <div class="eyebrow">Major Category // Precision Engineering</div>
+        <h1>Deep Hole Processing & Finishing</h1>
+        <p class="description">
+          Specialized high-performance machinery and tooling systems engineered for deep-hole drilling, boring, honing, skiving, and roller burnishing with extreme depth-to-diameter ratios.
+        </p>
+
+        <ul class="features-list">
+          <li>Deep Hole Drilling & Boring Systems</li>
+          <li>Gun Drilling Machines (ZK-21 Series)</li>
+          <li>Deep-Hole Honing Machines (MK Series)</li>
+          <li>Skiving & Roller Burnishing (TGK CNC Series)</li>
+          <li>Cutting Tools & Accessories (S.R.B Tools & Boring Heads)</li>
+        </ul>
+
+        <a href="mailto:princesahu@IBCC-india.com?subject=Enquiry%20regarding%20Deep%20Hole%20Processing" class="btn-action">
+          Request Technical Consultation <span>↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Sub-Category Explorer -->
+    <section class="tech-explorer">
+      <div class="section-header">
+        <h2>Sub-Category & Product Family Explorer</h2>
+        <p>Select a product family below to inspect its key models, operating principles, advantages, and technological specifications.</p>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="tabs-nav" role="tablist">
+        <button class="tab-btn active" onclick="openTab(event, 'sub-drilling')">Deep Hole Drilling & Boring</button>
+        <button class="tab-btn" onclick="openTab(event, 'sub-gun')">Gun Drilling Machines</button>
+        <button class="tab-btn" onclick="openTab(event, 'sub-honing')">Deep-Hole Honing</button>
+        <button class="tab-btn" onclick="openTab(event, 'sub-skiving')">Skiving & Burnishing</button>
+        <button class="tab-btn" onclick="openTab(event, 'sub-tools')">Cutting Tools & Accessories</button>
+      </div>
+
+      <!-- TAB 1: Drilling & Boring -->
+      <div id="sub-drilling" class="tab-panel active">
+        <div class="panel-title-bar">
+          <h3>Deep Hole Drilling & Boring Systems</h3>
+          <span class="partner-tag">Global Partner: Dezhou Tianrui Machinery</span>
+        </div>
+        <div class="models-highlight">
+          <strong>Key Models & Series:</strong>
+          <span class="model-badge">TK2120/2125</span>
+          <span class="model-badge">TK2135/2140</span>
+          <span class="model-badge">TK2150/2550</span>
+          <span class="model-badge">TK2180/2280</span>
+          <span class="model-badge">T2235/2240</span>
+          <span class="model-badge">T21100/22100</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚙</div>
+              <h4>How It Works</h4>
+            </div>
+            <p>
+              Utilizes BTA (Boring and Trepanning Association) or ejector drilling methods where high-pressure coolant flushes chips forward through the drill tube, maintaining straightness over extreme length-to-diameter ratios.
+            </p>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">★</div>
+              <h4>Key Advantages</h4>
+            </div>
+            <ul>
+              <li><strong>Exceptional Straightness:</strong> Minimal drill drift over deep bores.</li>
+              <li><strong>High Metal Removal:</strong> Rapid chip evacuation via high-pressure fluid flow.</li>
+              <li><strong>Heavy Workpiece Support:</strong> Handles large hydraulic cylinders and rotor shafts.</li>
+            </ul>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚡</div>
+              <h4>Latest Technology</h4>
+            </div>
+            <ul>
+              <li>Closed-loop coolant filtration and temperature control.</li>
+              <li>Vibration damping steady rests for long slender tubes.</li>
+              <li>Digital torque and pressure overload feedback.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Gun Drilling -->
+      <div id="sub-gun" class="tab-panel">
+        <div class="panel-title-bar">
+          <h3>Gun Drilling Machines</h3>
+          <span class="partner-tag">Global Partner: Dezhou Tianrui Machinery</span>
+        </div>
+        <div class="models-highlight">
+          <strong>Key Models & Series:</strong>
+          <span class="model-badge">ZK-21 Series (3-Axis & Full Protection)</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚙</div>
+              <h4>How It Works</h4>
+            </div>
+            <p>
+              Employs single-lip gun drills with internal coolant channels. The tool rotates while high-pressure oil is fed through the center of the drill to cool the cutting edge and push chips out through a V-shaped fluted groove.
+            </p>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">★</div>
+              <h4>Key Advantages</h4>
+            </div>
+            <ul>
+              <li><strong>Superior Hole Finish:</strong> Generates fine surface roughness (Ra 0.4–1.6 µm).</li>
+              <li><strong>Tight Tolerances:</strong> Achieves H7-H9 hole accuracy in a single pass.</li>
+              <li><strong>Full Enclosure Safety:</strong> Ergonomic guarding contains high-pressure mist and chips.</li>
+            </ul>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚡</div>
+              <h4>Latest Technology</h4>
+            </div>
+            <ul>
+              <li>Advanced multi-axis CNC synchronization (ZK-21 Series).</li>
+              <li>Auto tool breakage detection and feed-rate override.</li>
+              <li>Programmable high-pressure variable displacement pumps.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: Honing -->
+      <div id="sub-honing" class="tab-panel">
+        <div class="panel-title-bar">
+          <h3>Deep-Hole Honing Machines</h3>
+          <span class="partner-tag">Global Partner: Dezhou Tianrui Machinery</span>
+        </div>
+        <div class="models-highlight">
+          <strong>Key Models & Series:</strong>
+          <span class="model-badge">MK 350</span>
+          <span class="model-badge">MK 500</span>
+          <span class="model-badge">MK 1000 CNC High-Strength Honing</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚙</div>
+              <h4>How It Works</h4>
+            </div>
+            <p>
+              Uses expanding abrasive stones (honing sticks) mounted on a rotating and reciprocating mandrel to correct roundness, cylindricity, and surface texture defects inside pre-drilled or bored tubes.
+            </p>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">★</div>
+              <h4>Key Advantages</h4>
+            </div>
+            <ul>
+              <li><strong>Cross-Hatch Pattern:</strong> Retains lubricating oil effectively for cylinder walls.</li>
+              <li><strong>Micron Accuracy:</strong> Corrects taper, ovality, and minor alignment errors.</li>
+              <li><strong>High-Strength Capability:</strong> Handles hardened alloy steels seamlessly.</li>
+            </ul>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚡</div>
+              <h4>Latest Technology</h4>
+            </div>
+            <ul>
+              <li>Microprocessor-controlled stone expansion pressure.</li>
+              <li>Automatic size gauging with in-process air sizing probes.</li>
+              <li>Programmable stroke length and dwell frequency.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Skiving & Burnishing -->
+      <div id="sub-skiving" class="tab-panel">
+        <div class="panel-title-bar">
+          <h3>Skiving & Roller Burnishing Systems</h3>
+          <span class="partner-tag">Global Partner: Dezhou Tianrui Machinery</span>
+        </div>
+        <div class="models-highlight">
+          <strong>Key Models & Series:</strong>
+          <span class="model-badge">TGK 16 CNC</span>
+          <span class="model-badge">TGK 25 CNC</span>
+          <span class="model-badge">TGK 50 CNC</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚙</div>
+              <h4>How It Works</h4>
+            </div>
+            <p>
+              Combines two mechanical steps into a single pass: peeling/skiving heads shave off internal stock allowance at high speed, followed immediately by roller burnishing heads that cold-work and smooth the surface via plastic deformation.
+            </p>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">★</div>
+              <h4>Key Advantages</h4>
+            </div>
+            <ul>
+              <li><strong>Unmatched Speed:</strong> Up to 10x faster than traditional honing for hydraulic tubes.</li>
+              <li><strong>Enhanced Surface Hardness:</strong> Roller burnishing work-hardens the inner skin to resist wear.</li>
+              <li><strong>Mirror Finish:</strong> Consistently achieves Ra &lt; 0.2 µm.</li>
+            </ul>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚡</div>
+              <h4>Latest Technology</h4>
+            </div>
+            <ul>
+              <li>Automatic tool retraction and expansion mechanism.</li>
+              <li>High-torque spindle drives with intelligent chip breaking.</li>
+              <li>Integrated hydraulic clamping and rapid part loading.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: Cutting Tools & Accessories -->
+      <div id="sub-tools" class="tab-panel">
+        <div class="panel-title-bar">
+          <h3>Cutting Tools & Accessories</h3>
+          <span class="partner-tag">Global Partner: Dezhou Tianrui / Specialized Tooling</span>
+        </div>
+        <div class="models-highlight">
+          <strong>Key Models & Series:</strong>
+          <span class="model-badge">S.R.B Tools</span>
+          <span class="model-badge">Deep Hole Drill Heads</span>
+          <span class="model-badge">Rough/Precision Boring Heads</span>
+          <span class="model-badge">Trepanning Drills</span>
+        </div>
+        <div class="detail-grid">
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚙</div>
+              <h4>How It Works</h4>
+            </div>
+            <p>
+              Engineered cutting heads and modular tooling designed specifically for extreme depth machining, featuring indexable carbide inserts, guide pads for self-centering, and optimized coolant distribution channels.
+            </p>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">★</div>
+              <h4>Key Advantages</h4>
+            </div>
+            <ul>
+              <li><strong>Extended Tool Life:</strong> Premium carbide grades withstand high thermal loads.</li>
+              <li><strong>Modular Flexibility:</strong> Quick-change heads reduce machine downtime.</li>
+              <li><strong>Optimized Chip Control:</strong> Breakers prevent bird-nesting of metal chips.</li>
+            </ul>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-header">
+              <div class="detail-icon">⚡</div>
+              <h4>Latest Technology</h4>
+            </div>
+            <ul>
+              <li>PVD/CVD multilayer nano-coatings for high wear resistance.</li>
+              <li>Micro-adjustable precision boring cartridges.</li>
+              <li>Optimized fluid nozzle angles for efficient chip flushing.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW SECTION: Next-Generation Deep Hole Machine Technologies -->
+    <section class="tech-explorer" style="margin-bottom: 0;">
+      <div class="section-header">
+        <h2>Next-Gen Deep Hole Machine Technologies</h2>
+        <p>Latest 2026 engineering breakthroughs integrated across our CNC deep-hole drilling, boring, and finishing platforms.</p>
+      </div>
+
+      <div class="innovation-grid">
+        <div class="innovation-card">
+          <span class="tech-tag">01 // Closed-Loop Control</span>
+          <h4>Adaptive Drilling Control (ADC)</h4>
+          <p>
+            Real-time pressure, flow, and spindle load sensors actively adjust coolant pressure and feed rates in a closed loop—preventing drill drift when intersecting cross-holes or hard inclusions.
+          </p>
+          <span class="metric-pill">Up to 30% Energy Savings</span>
+        </div>
+
+        <div class="innovation-card">
+          <span class="tech-tag">02 // Hybrid Integration</span>
+          <h4>Multi-Axis Drilling & Milling</h4>
+          <p>
+            Modern 3-axis and 5-axis deep-hole centers combine precision gun drilling with secondary pocket milling, tapping, and chamfering in a single clamping setup.
+          </p>
+          <span class="metric-pill">Reduces Setup Time by 40%</span>
+        </div>
+
+        <div class="innovation-card">
+          <span class="tech-tag">03 // Exotic Alloys</span>
+          <h4>80+ Bar High-Pressure Cooling</h4>
+          <p>
+            Variable-displacement ultra-high-pressure coolant systems paired with rigid box-way beds allow effortless machining of Titanium, Inconel, and hardened defense steels.
+          </p>
+          <span class="metric-pill">2x Longer Tool Life</span>
+        </div>
+
+        <div class="innovation-card">
+          <span class="tech-tag">04 // Process Consolidation</span>
+          <h4>Single-Pass Skive & Burnish</h4>
+          <p>
+            Eliminates slow secondary honing operations on hydraulic cylinders by combining high-speed internal peeling with cold-working roller burnishing in one continuous stroke.
+          </p>
+          <span class="metric-pill">Ra &lt; 0.2 µm Mirror Finish</span>
+        </div>
+
+        <div class="innovation-card">
+          <span class="tech-tag">05 // Industry 4.0 Telemetry</span>
+          <h4>Real-Time Acoustic & Load Sensing</h4>
+          <p>
+            Integrated acoustic emission and torque sensors detect micro-chipping or flute clogging milliseconds before catastrophic tool breakage occurs inside deep bores.
+          </p>
+          <span class="metric-pill">Zero Scrap Protection</span>
+        </div>
+
+        <div class="innovation-card">
+          <span class="tech-tag">06 // Smart Metrology</span>
+          <h4>In-Process Air & Laser Gauging</h4>
+          <p>
+            Automated pneumatic and laser bore probes verify internal diameter, straightness, and cylindricity mid-cycle, automatically compensating stone pressure or tool wear.
+          </p>
+          <span class="metric-pill">Sub-Micron Repeatability</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function openTab(evt, tabId) {
+      const panels = document.querySelectorAll('.tab-panel');
+      panels.forEach(panel => panel.classList.remove('active'));
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
